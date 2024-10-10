@@ -33,7 +33,7 @@ class MediasManager extends StatelessWidget {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: const StartScreen()),
+            child: const HomeScreen()),
       ),
     );
   }
