@@ -3,7 +3,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class CheckPermission {
-  isStoragePermission() async {
+  CheckPermission._();
+
+  static Future<bool> isStoragePermission() async {
     var isStorage = await Permission.storage.status;
     debugPrint('isstorage $isStorage');
     if (!isStorage.isGranted) {
@@ -18,7 +20,7 @@ class CheckPermission {
     }
   }
 
-  storagePermission() async {
+  static storagePermission() async {
     final DeviceInfoPlugin info = DeviceInfoPlugin();
     final AndroidDeviceInfo androidInfo = await info.androidInfo;
     final int androidVersion = int.parse(androidInfo.version.release);

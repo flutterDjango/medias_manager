@@ -51,17 +51,17 @@ class StartScreen extends StatelessWidget {
           const SizedBox(height: 30),
           OutlinedButton(
             onPressed: () async {
-              List<FileSystemEntity> files = await read.getAudioFiles;
-              debugPrint('files! $files');
-              debugPrint('--------------------');
+              // List<FileSystemEntity> files = await read.getAudioFiles;
+              // debugPrint('files! $files');
+              // debugPrint('--------------------');
 
-              debugPrint('file ${files[0].path}');
-              final myFile = File(files[0].path);
-              // debugPrint(myFile);
+              // debugPrint('file ${files[0].path}');
+              // final myFile = File(files[0].path);
+              // // debugPrint(myFile);
 
-              debugPrint(myFile.path);
-              debugPrint('avant');
-              debugPrint('après');
+              // debugPrint(myFile.path);
+              // debugPrint('avant');
+              // debugPrint('après');
               // await openFile(myFile);
               // OpenFile.open(files[0].path);
             },

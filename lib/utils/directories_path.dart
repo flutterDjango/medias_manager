@@ -1,32 +1,15 @@
 import 'dart:io';
 
+import 'package:diacritic/diacritic.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DirectoriesPath {
-  // getVideoPath() async {
-  //   final Directory appStorage = await getApplicationDocumentsDirectory();
-  //   final filePath = Directory("${appStorage.path}/Video");
-  //   if (await filePath.exists()) {
-  //     return filePath.path;
-  //   } else {
-  //     await filePath.create(recursive: true);
-  //     return filePath.path;
-  //   }
-  // }
-  // getAudioPath() async {
-  //   final Directory appStorage = await getApplicationDocumentsDirectory();
-  //   final filePath = Directory("${appStorage.path}/Audio");
-  //   if (await filePath.exists()) {
-  //     return filePath.path;
-  //   } else {
-  //     await filePath.create(recursive: true);
-  //     return filePath.path;
-  //   }
-  // }
   Future<String>getPath(folder) async {
     final Directory appStorage = await getApplicationDocumentsDirectory();
-    final filePath = Directory("${appStorage.path}/$folder");
+    final directory = removeDiacritics(folder);
+    final filePath = Directory("${appStorage.path}/$directory");
     if (await filePath.exists()) {
       return filePath.path;
     } else {
@@ -35,9 +18,23 @@ class DirectoriesPath {
     }
   }
   Future<List<FileSystemEntity>> localFiles(folder) async {
-    final path = await getPath(folder);
+    final directory = removeDiacritics(folder);
+    final path = await getPath(directory);
     debugPrint('***$path');
     return Directory(path).listSync();}
+
+
+  Future<void> saveFilePermanently(PlatformFile file, String folder) async {
+    // stockage permanent et non en cache
+    
+    final appStorage = await getPath(folder);
+    // final appStorage = await getApplicationDocumentsDirectory();
+    final newFile = File('$appStorage/${file.name}');
+
+    File(file.path!).copy(newFile.path);
+  }
+
+  // Future<FileSystemEntity> delete({bool recursive = false});
 
 }
 
