@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medias_manager/screens/audio_screen.dart';
 import 'package:medias_manager/screens/video_screen.dart';
 import 'package:medias_manager/widgets/files_list_widget.dart';
+import 'package:medias_manager/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,48 +11,57 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Title(
-          color: Colors.white,
-          child: const Text("Médias manager"),
+        title: Center(
+          child: Title(
+            color: Colors.white,
+            child: const Text("Médias manager"),
+          ),
         ),
+        automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FilesListWidget(
-                      mediaCategory: "Vidéo",
-                    ),
-                  ),
-                );
-                //  Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const VideoScreen()),
-                // );
-              },
-              child: const Text("Vidéo"),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const HorizontalButtonBarWidget(),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FilesListWidget(
+                          mediaCategory: "Vidéo",
+                        ),
+                      ),
+                    );
+                    //  Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => const VideoScreen()),
+                    // );
+                  },
+                  child: const Text("Vidéo"),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FilesListWidget(
+                          mediaCategory: "Audio",
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text("Audio"),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FilesListWidget(
-                      mediaCategory: "Audio",
-                    ),
-                  ),
-                );
-              },
-              child: const Text("Audio"),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

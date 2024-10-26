@@ -55,33 +55,52 @@ class _FilesListWidgetState extends State<FilesListWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.mediaCategory),
-      ),
-      body: isPermission
-          ? filesList.isNotEmpty
-              ? ListView.builder(
-                  itemCount: filesList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var file = filesList[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: TileList(
-                          file: file, mediaCategory: widget.mediaCategory),
-                    );
-                    // fileName: file['fileName'],
-                    // path: file['path'],
-                  },
-                )
-              : Center(
-                  child:
-                      Text('Aucun fichier ${widget.mediaCategory} disponible.'),
-                )
-          : TextButton(
+        title: Center(child: Text(widget.mediaCategory)),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
               onPressed: () {
-                checkPermission();
+                Scaffold.of(context).openDrawer();
               },
-              child: const Text("Problème de permission"),
-            ),
+            );
+          },
+        ),
+      ),
+
+      drawer: const NavigatorDrawerWidget(),
+      body: Column(
+        children: [
+          const HorizontalButtonBarWidget(),
+          isPermission
+              ? filesList.isNotEmpty
+                  ? Expanded(
+                    child: ListView.builder(
+                        itemCount: filesList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var file = filesList[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: TileList(
+                                file: file, mediaCategory: widget.mediaCategory),
+                          );
+                          // fileName: file['fileName'],
+                          // path: file['path'],
+                        },
+                      ),
+                  )
+                  : Center(
+                      child:
+                          Text('Aucun fichier ${widget.mediaCategory} disponible.'),
+                    )
+              : TextButton(
+                  onPressed: () {
+                    checkPermission();
+                  },
+                  child: const Text("Problème de permission"),
+                ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await AddMediaFiles().addFiles(widget.mediaCategory);
@@ -91,6 +110,7 @@ class _FilesListWidgetState extends State<FilesListWidget> {
         },
         child: const Icon(Icons.add),
       ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
     );
   }
 }
