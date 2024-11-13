@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:medias_manager/utils/directories_path.dart';
-import 'package:medias_manager/utils/ffmpeg_commands.dart';
-import 'package:medias_manager/utils/helpers.dart';
-import 'package:medias_manager/utils/medias_format.dart';
-import 'package:medias_manager/widgets/circular_progress_widget.dart';
-import 'package:medias_manager/widgets/dropdown_items_widget.dart';
-import 'package:medias_manager/widgets/files_list_widget.dart';
+import 'package:medias_manager/utils/utils.dart';
+// import 'package:medias_manager/utils/ffmpeg_commands.dart';
+// import 'package:medias_manager/utils/helpers.dart';
+// import 'package:medias_manager/utils/medias_format.dart';
+// import 'package:medias_manager/widgets/widget.dart';
+// import 'package:medias_manager/widgets/dropdown_items_widget.dart';
+// import 'package:medias_manager/widgets/files_list_widget.dart';
+
+import 'widgets.dart';
 
 class ExtractAudioCardWidget extends StatefulWidget {
   const ExtractAudioCardWidget(
@@ -46,7 +48,6 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
     var path = await getFilesPath.getPath("Audio");
 
     setState(() {
-      debugPrint("---------------------------------  $path");
       audioPath = path;
       // filesList = filesJsonList;
     });
@@ -69,73 +70,75 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
           elevation: 10,
           shadowColor: Colors.grey.shade100,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                const Text(
-                  "Extraire l'audio de la vidéo.",
-                  style: TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  controller: _audioNameController,
-                  maxLength: nbMaxChar,
-                  decoration: const InputDecoration(
-                    label: Text("Nom du fichier audio"),
+            padding: const EdgeInsets.only(top: 10.0, left: 15, right: 15, bottom: 20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Text(
+                    "Extraire l'audio de la vidéo.",
+                    style: TextStyle(fontSize: 20),
                   ),
-                  validator: (value) {
-                    return Helpers.validStringField(value, nbMaxChar);
-                  },
-                  onSaved: (value) {
-                    _fileName = value!;
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                DropdownItems(
-                  itemsList:
-                      MediasFormat.getFormatList(widget.mediaCategory, true),
-                  initialItem: format,
-                  callback: callback,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                _isNotDone ? ElevatedButton(
-                  onPressed: () async {
-                    if (_formGlobalKey.currentState!.validate()) {
-                      _formGlobalKey.currentState!.save();
-                      String audio = "$audioPath/$_fileName.$format";
-                      final String video = widget.file.path;
-                      debugPrint(video);
-                      debugPrint("audio path $audio $_isNotDone");
-                     
-                      setState(() {
-                        _isNotDone = false;
-                      });
-                      await FfmpegCommands.extractAudioFromVideo(video, audio);
-                      debugPrint('not spin $_isNotDone');
-
-                      if (context.mounted) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FilesListWidget(
-                              mediaCategory: "Audio",
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  TextFormField(
+                    controller: _audioNameController,
+                    // keyboardType: TextInputType.text,
+                    maxLength: nbMaxChar,
+                    decoration: const InputDecoration(
+                      label: Text("Nom du fichier audio"),
+                    ),
+                    validator: (value) {
+                      return Helpers.validStringField(value, nbMaxChar);
+                    },
+                    onSaved: (value) {
+                      _fileName = value!;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  DropdownItems(
+                    itemsList:
+                        MediasFormat.getFormatList(widget.mediaCategory, true),
+                    initialItem: format,
+                    label: 'Format du fichier de sortie',
+                    callback: callback,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _isNotDone ? ElevatedButton(
+                    onPressed: () async {
+                      if (_formGlobalKey.currentState!.validate()) {
+                        _formGlobalKey.currentState!.save();
+                        String audio = "$audioPath/$_fileName.$format";
+                        final String video = widget.file.path;
+                       
+                        setState(() {
+                          _isNotDone = false;
+                        });
+                        await FfmpegCommands.extractAudioFromVideo(video, audio);
+              
+                        if (context.mounted) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const FilesListWidget(
+                                mediaCategory: "Audio",
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return;
+                          );
+                        } else {
+                          return;
+                        }
                       }
-                    }
-                  },
-                  child: const Text("Extraire"),
-                ):const CircularProgressWidget()
-              ],
+                    },
+                    child: const Text("Extraire"),
+                    
+                  ):const CircularProgressWidget()
+                ],
+              ),
             ),
           ),
         ),

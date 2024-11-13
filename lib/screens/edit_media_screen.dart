@@ -35,41 +35,56 @@ class _EditMediaScreenState extends State<EditMediaScreen> {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const HorizontalButtonBarWidget(),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: Card(
-              //     elevation: 10,
-              //     shadowColor: Colors.grey.shade100,
-              //     child: Padding(
-              //       padding: const EdgeInsets.all(15),
-              //       child: Column(
-              //         children: [
-              //           const Text(
-              //             "Nom du fichier:",
-              //             style: TextStyle(fontSize: 20),
-              //           ),
-              //           Text(
-              //             widget.fileName,
-              //             style: const TextStyle(fontSize: 20),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              (widget.mediaCategory == "Vidéo")
-                  ? Center(
+              const HorizontalButtonBarWidget(
+                homeScreen: false,
+              ),
+              if (widget.mediaCategory == "Vidéo")
+                Column(
+                  children: [
+                    Center(
                       child: ExtractAudioCardWidget(
                         mediaCategory: widget.mediaCategory,
                         // audioFormat: audioFormat,
                         file: widget.file,
                       ),
-                    )
-                  : const Text('audio file'),
+                    ),
+                    Center(
+                      child: RemoveAudioCardWidget(
+                        mediaCategory: widget.mediaCategory,
+                        // audioFormat: audioFormat,
+                        file: widget.file,
+                      ),
+                    ),
+                    Center(
+                      child: CutUpMediaCardWidget(
+                        mediaCategory: widget.mediaCategory,
+                        // audioFormat: audioFormat,
+                        file: widget.file,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                (widget.mediaCategory == "Audio")
+                    ? Column(
+                        children: [
+                          Center(
+                            child: CutUpMediaCardWidget(
+                              mediaCategory: widget.mediaCategory,
+                              // audioFormat: audioFormat,
+                              file: widget.file,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          Center(
+                            child: JuxtaposeImagesCardWidget(
+                                file: widget.file,),
+                          ),
+                        ],
+                      ),
               const SizedBox(
                 height: 20,
               ),

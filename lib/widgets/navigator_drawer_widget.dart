@@ -52,6 +52,20 @@ class NavigatorDrawerWidget extends StatelessWidget {
               );
             },
           ),
+           ListTile(
+            leading: const Icon(Icons.image_outlined),
+            title: const Text("Image"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FilesListWidget(
+                    mediaCategory: "Image",
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

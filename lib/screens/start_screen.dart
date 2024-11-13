@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:medias_manager/widgets/display_audio_files_widget.dart';
+// import 'package:medias_manager/widgets/display_audio_files_widget.dart';
 import 'package:medias_manager/widgets/widgets.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:open_file_plus/open_file_plus.dart';
@@ -70,7 +70,7 @@ class StartScreen extends StatelessWidget {
             ),
             child: const Text("get all files"),
           ),
-          const DisplayAudioFilesWidget(),
+          // const DisplayAudioFilesWidget(),
         ],
       ),
     );

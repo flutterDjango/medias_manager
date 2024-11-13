@@ -7,7 +7,6 @@ class CheckPermission {
 
   static Future<bool> isStoragePermission() async {
     var isStorage = await Permission.storage.status;
-    debugPrint('isstorage $isStorage');
     if (!isStorage.isGranted) {
       await Permission.storage.request();
       if (!isStorage.isGranted) {

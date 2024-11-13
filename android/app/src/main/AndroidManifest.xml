@@ -3,6 +3,7 @@
         android:label="medias_manager"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
         >
         <!-- android:enableOnBackInvokedCallback="true"
         android:largeHeap="true" -->

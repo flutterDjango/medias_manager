@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class DropdownItems extends StatefulWidget {
   const DropdownItems(
-      {super.key, required this.itemsList, required this.initialItem, required this.callback});
+      {super.key, required this.itemsList, required this.initialItem, required this.label, required this.callback});
   final List<String>? itemsList;
   final String? initialItem;
+  final String? label;
   final Function(String) callback;
   @override
   State<DropdownItems> createState() => _DropdownItemsState();
@@ -15,7 +16,7 @@ class _DropdownItemsState extends State<DropdownItems> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
+      width: 270,
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -23,7 +24,7 @@ class _DropdownItemsState extends State<DropdownItems> {
             borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: Colors.grey),
           ),
-          labelText: 'Format du fichier de sortie',
+          labelText: widget.label,
           labelStyle: const TextStyle(color: Colors.grey),
         ),
         hint: (widget.initialItem == null)

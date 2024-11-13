@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:diacritic/diacritic.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DirectoriesPath {
@@ -20,7 +19,6 @@ class DirectoriesPath {
   Future<List<FileSystemEntity>> localFiles(folder) async {
     final directory = removeDiacritics(folder);
     final path = await getPath(directory);
-    debugPrint('***$path');
     return Directory(path).listSync();}
 
 

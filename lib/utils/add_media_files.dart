@@ -7,23 +7,26 @@ class AddMediaFiles {
     final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: getFileType(mediaCategory),
+      allowCompression: false,
+      compressionQuality: 0,
     );
     if (result == null) return;
     for (var file in result.files) {
-      debugPrint(file.path);
-      debugPrint(file.toString());
+      debugPrint("file $file");
       DirectoriesPath().saveFilePermanently(file, mediaCategory);
     }
   }
 
   FileType getFileType(mediaCategory) {
-    debugPrint("mediaCategory $mediaCategory");
     if (mediaCategory == "Audio") {
+      debugPrint("** $mediaCategory");
       return FileType.audio;
     }
     if (mediaCategory == "Vidéo") {
-      debugPrint("VIDEO");
       return FileType.video;
+    }
+    if (mediaCategory == "Image") {
+      return FileType.image;
     }
     return FileType.any;
   }

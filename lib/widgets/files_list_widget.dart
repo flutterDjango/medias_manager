@@ -19,6 +19,7 @@ class FilesListWidget extends StatefulWidget {
 class _FilesListWidgetState extends State<FilesListWidget> {
   bool isPermission = false;
   var filesList = [];
+
   // var checkAllPermissions = CheckPermission();
 
   var getFilesPath = DirectoriesPath();
@@ -71,27 +72,42 @@ class _FilesListWidgetState extends State<FilesListWidget> {
       drawer: const NavigatorDrawerWidget(),
       body: Column(
         children: [
-          const HorizontalButtonBarWidget(),
+          const HorizontalButtonBarWidget(
+            homeScreen: false,
+          ),
+          if (widget.mediaCategory == 'Image')
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.pan_tool_alt_rounded),
+                SizedBox(
+                  width: 5,
+                ),
+                Text("Juxtaposer deux images"),
+              ],
+            ),
           isPermission
               ? filesList.isNotEmpty
                   ? Expanded(
-                    child: ListView.builder(
+                      child: ListView.builder(
                         itemCount: filesList.length,
                         itemBuilder: (BuildContext context, int index) {
                           var file = filesList[index];
                           return Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: TileList(
-                                file: file, mediaCategory: widget.mediaCategory),
-                          );
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: TileList(
+                                file: file,
+                                mediaCategory: widget.mediaCategory,
+                                fileList: filesList,
+                              ));
                           // fileName: file['fileName'],
                           // path: file['path'],
                         },
                       ),
-                  )
+                    )
                   : Center(
-                      child:
-                          Text('Aucun fichier ${widget.mediaCategory} disponible.'),
+                      child: Text(
+                          'Aucun fichier ${widget.mediaCategory} disponible.'),
                     )
               : TextButton(
                   onPressed: () {
@@ -116,11 +132,14 @@ class _FilesListWidgetState extends State<FilesListWidget> {
 }
 
 class TileList extends StatelessWidget {
-  const TileList({super.key, required this.file, required this.mediaCategory});
+  const TileList(
+      {super.key,
+      required this.file,
+      required this.mediaCategory,
+      required this.fileList});
 
   final FileSystemEntity file;
-  // final String fileName;
-  // final String path;
+  final List<dynamic> fileList;
   final String mediaCategory;
 
   @override
@@ -145,24 +164,40 @@ class TileList extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (mediaCategory == "Image")
+                IconButton(
+                    iconSize: 25,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JuxtaposeImagesCardTestWidget(
+                            file: file,
+                            fileName: fileName,
+                            fileList: fileList,
+                            mediaCategory: mediaCategory,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.pan_tool_alt_rounded)),
               IconButton(
                 iconSize: 25,
                 onPressed: () async {
                   final result = await showDialog(
-                      context: context,
-                      builder: (_) => AlertDialogYesNoWidget(
-                          title: "Attention!",
-                          message:
-                              "Voulez-vous effacer le fichier '$fileName' ?"));
+                    context: context,
+                    builder: (_) => AlertDialogYesNoWidget(
+                        title: "Attention!",
+                        message:
+                            "Voulez-vous effacer le fichier '$fileName' ?"),
+                  );
                   // const confirm =  AlertDialogYesNoWidget(title: "Effacer le fichier",message: "Voulez-vous effacer le fichier ?");
-                  debugPrint("-- $result");
+
                   if (!result) {
                     return;
                   }
                   if (file.existsSync()) {
                     file.deleteSync();
-                  } else {
-                    debugPrint('File does not exist.');
                   }
                   if (context.mounted) {
                     Navigator.push(
@@ -198,7 +233,8 @@ class TileList extends StatelessWidget {
             await showModalBottomSheet(
               context: context,
               builder: (ctx) {
-                return DetailMediaWidget(file: file);
+                return DetailMediaWidget(
+                    file: file, mediaCategory: mediaCategory);
               },
             );
           },
@@ -206,15 +242,4 @@ class TileList extends StatelessWidget {
       ),
     );
   }
-
-  // Icon getIconMedia(mediaCategory) {
-  //   if (mediaCategory == "Audio") {
-  //     return const Icon(Icons.music_note);
-  //   } else if (mediaCategory == "Vidéo") {
-  //     return const Icon(Icons.play_circle_outline);
-  //   } else if (mediaCategory == "Image") {
-  //     return const Icon(Icons.photo);
-  //   }
-  //   return const Icon(Icons.warning_amber);
-  // }
 }

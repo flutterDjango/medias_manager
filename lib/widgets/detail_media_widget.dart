@@ -6,26 +6,29 @@ import 'package:medias_manager/utils/ffmpeg_commands.dart';
 import 'package:medias_manager/widgets/circular_progress_widget.dart';
 
 class DetailMediaWidget extends StatelessWidget {
-  const DetailMediaWidget({super.key, required this.file});
+  const DetailMediaWidget(
+      {super.key, required this.file, required this.mediaCategory});
 
   final FileSystemEntity file;
-  Future<String?> fetchMetadas(file) async {
-    String commandToExecute =
-        '-v error ${file.path} -show_format -show_streams -print_format json';
-    try {
-      String? result = await FFprobeKit.execute(commandToExecute).then(
-        (session) async {
-          // final returnCode = await session.getReturnCode();
-          final output = await session.getOutput();
-          return output;
-        },
-      );
-      return result;
-    } catch (e) {
-      debugPrint('zut $e');
-      return null;
-    }
-  }
+  final String mediaCategory;
+  // Future<String?> fetchMetadas(file) async {
+  //   String commandToExecute =
+  //       '-v error ${file.path} -show_format -show_streams -print_format json';
+  //   try {
+  //     String? result = await FFprobeKit.execute(commandToExecute).then(
+  //       (session) async {
+  //         // final returnCode = await session.getReturnCode();
+  //         final output = await session.getOutput();
+  //         debugPrint('------------ $output');
+  //         return output;
+  //       },
+  //     );
+  //     return result;
+  //   } catch (e) {
+  //     debugPrint('zut $e');
+  //     return null;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +57,6 @@ class DetailMediaWidget extends StatelessWidget {
               FutureBuilder<Map<String, dynamic>?>(
                 future: FfmpegCommands.fetchMetadatas(file),
                 builder: (context, snapshot) {
-                  // Data is not loading, you should show progress indicator to user
                   if (!snapshot.hasData) {
                     return const CircularProgressWidget();
                   }
@@ -63,7 +65,7 @@ class DetailMediaWidget extends StatelessWidget {
                   }
                   if (snapshot.hasData) {
                     Map<String, dynamic>? data = snapshot.data;
-                   
+
                     return Column(
                       children: [
                         Text('Taille : ${data!['size'] ?? ""}'),
@@ -73,8 +75,11 @@ class DetailMediaWidget extends StatelessWidget {
                           indent: 20,
                           endIndent: 20,
                         ),
-                        for (int i = 1; i <= data['streams'].length; i++)
-                          _displayStream(data, i),
+                        if (mediaCategory == "Image")
+                          _displayDataImage(data)
+                        else
+                          for (int i = 1; i <= data['streams'].length; i++)
+                            _displayStream(data, i),
                       ],
                     );
                   }
@@ -98,6 +103,17 @@ class DetailMediaWidget extends StatelessWidget {
           // ),
         ],
       ),
+    );
+  }
+
+  _displayDataImage(data) {
+    // String? channelLayout = data!['streams']['stream_$i']['channel_layout'];
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text("Largeur : ${data['streams']['stream_1']['width'] ?? '-'} px"),
+        Text("Hauteur : ${data['streams']['stream_1']['height'] ?? '-'} px"),
+      ],
     );
   }
 
