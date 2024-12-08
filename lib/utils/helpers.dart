@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'utils.dart';
+
 class Helpers {
   Helpers._();
 
@@ -97,20 +99,32 @@ class Helpers {
 
   static String convertHourMimSecondToSecond(hourMinSecond) {
     int hourToSecond = int.parse(hourMinSecond.split(":").first) * 3600;
-    int minToSecond = int.parse(hourMinSecond.split(":")[1])*60;
+    int minToSecond = int.parse(hourMinSecond.split(":")[1]) * 60;
     int second = int.parse(hourMinSecond.split(":").last);
     return (hourToSecond + minToSecond + second).toString();
   }
 
   static String durationInSeconde(hourMinSecondStart, hourMinSecondEnd) {
-    int startSecond = int.parse(convertHourMimSecondToSecond(hourMinSecondStart));
+    int startSecond =
+        int.parse(convertHourMimSecondToSecond(hourMinSecondStart));
     int endSecond = int.parse(convertHourMimSecondToSecond(hourMinSecondEnd));
-    return (endSecond-startSecond).toString();
-
+    return (endSecond - startSecond).toString();
   }
 
-  static bool fileAlreadyExist(pathFile){
-    var file=File(pathFile);
+  static bool fileAlreadyExist(pathFile) {
+    var file = File(pathFile);
     return file.existsSync();
+  }
+
+  static getImageSize(imageFile, imageSize) async {
+    // retourne une map {string filePath : {'width': int, 'height':int}}
+    int imageWidth = 0;
+    int imageHeight = 0;
+    Map<String, dynamic>? result =
+        await FfmpegCommands.fetchMetadatas(imageFile);
+    debugPrint(result.toString());
+    imageWidth = result?['streams']['stream_1']['width'];
+    imageHeight = result?['streams']['stream_1']['height'];
+    imageSize[imageFile.path] = {"width": imageWidth, "height": imageHeight};
   }
 }

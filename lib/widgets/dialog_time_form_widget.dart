@@ -17,13 +17,7 @@ class _DialogTimeFormWidgetState extends State<DialogTimeFormWidget> {
 
   String _duration = "00:00:00";
   final _formGlobalKey = GlobalKey<FormState>();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _hourController.text = '00';
-
-  // }
-
+ 
   @override
   void dispose() {
     _hourController.dispose();
@@ -46,83 +40,85 @@ class _DialogTimeFormWidgetState extends State<DialogTimeFormWidget> {
         height: MediaQuery.of(context).size.height * 0.35,
         child: Form(
           key: _formGlobalKey,
-          child: Column(
-            children: [
-              TextFormField(
-                autofocus: true,
-                controller: _hourController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: false),
-                decoration: const InputDecoration(
-                  label: Text('Heure'),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  autofocus: true,
+                  controller: _hourController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: false),
+                  decoration: const InputDecoration(
+                    label: Text('Heure'),
+                  ),
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _duration =
+                            "${_hourController.text}:${_minuteController.text}:${_minuteController.text}";
+                      },
+                    );
+                  },
+                  validator: (value) {
+                    return Helpers.validTimeField(value);
+                  },
+                  onSaved: (value) {
+                    _duration = calculDuration(_hourController.text,
+                        _minuteController.text, _secondeController.text);
+                  },
                 ),
-                onChanged: (value) {
-                  setState(
-                    () {
-                      _duration =
-                          "${_hourController.text}:${_minuteController.text}:${_minuteController.text}";
-                    },
-                  );
-                },
-                validator: (value) {
-                  return Helpers.validTimeField(value);
-                },
-                onSaved: (value) {
-                  _duration = calculDuration(_hourController.text,
-                      _minuteController.text, _secondeController.text);
-                },
-              ),
-              TextFormField(
-                autofocus: true,
-                controller: _minuteController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: false),
-                decoration: const InputDecoration(label: Text('Minute')),
-                onChanged: (value) {
-                  setState(
-                    () {
-                      _duration =
-                          "${_hourController.text}:${_minuteController.text}:${_secondeController.text}";
-                    },
-                  );
-                },
-                validator: (value) {
-                  return Helpers.validTimeField(value);
-                },
-                onSaved: (value) {
-                  _duration = calculDuration(_hourController.text,
-                      _minuteController.text, _secondeController.text);
-                },
-              ),
-              TextFormField(
-                // autofocus: true,
-                controller: _secondeController,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: false),
-                decoration: const InputDecoration(label: Text('Seconde')),
-                onChanged: (value) {
-                  setState(
-                    () {
-                      _duration =
-                          "${_hourController.text}:${_minuteController.text}:${_secondeController.text}";
-                    },
-                  );
-                },
-                validator: (value) {
-                  return Helpers.validTimeField(value);
-                },
-                onSaved: (value) {
-                  _duration = calculDuration(_hourController.text,
-                      _minuteController.text, _secondeController.text);
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                "${widget.title.split(" ").first}: ${calculDuration(_hourController.text, _minuteController.text, _secondeController.text)}",
-              ),
-            ],
+                TextFormField(
+                  autofocus: true,
+                  controller: _minuteController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: false),
+                  decoration: const InputDecoration(label: Text('Minute')),
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _duration =
+                            "${_hourController.text}:${_minuteController.text}:${_secondeController.text}";
+                      },
+                    );
+                  },
+                  validator: (value) {
+                    return Helpers.validTimeField(value);
+                  },
+                  onSaved: (value) {
+                    _duration = calculDuration(_hourController.text,
+                        _minuteController.text, _secondeController.text);
+                  },
+                ),
+                TextFormField(
+                  // autofocus: true,
+                  controller: _secondeController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: false),
+                  decoration: const InputDecoration(label: Text('Seconde')),
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        _duration =
+                            "${_hourController.text}:${_minuteController.text}:${_secondeController.text}";
+                      },
+                    );
+                  },
+                  validator: (value) {
+                    return Helpers.validTimeField(value);
+                  },
+                  onSaved: (value) {
+                    _duration = calculDuration(_hourController.text,
+                        _minuteController.text, _secondeController.text);
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "${widget.title.split(" ").first}: ${calculDuration(_hourController.text, _minuteController.text, _secondeController.text)}",
+                ),
+              ],
+            ),
           ),
         ),
       ),

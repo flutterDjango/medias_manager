@@ -4,3 +4,5 @@ export "directories_path.dart";
 export "add_media_files.dart";
 export "medias_format.dart";
 export "helpers.dart";
+export "files_list.dart";
+

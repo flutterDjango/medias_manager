@@ -94,12 +94,13 @@ class _FilesListWidgetState extends State<FilesListWidget> {
                         itemBuilder: (BuildContext context, int index) {
                           var file = filesList[index];
                           return Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: TileList(
-                                file: file,
-                                mediaCategory: widget.mediaCategory,
-                                fileList: filesList,
-                              ));
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: TileList(
+                              file: file,
+                              mediaCategory: widget.mediaCategory,
+                              fileList: filesList,
+                            ),
+                          );
                           // fileName: file['fileName'],
                           // path: file['path'],
                         },
@@ -171,10 +172,10 @@ class TileList extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => JuxtaposeImagesCardTestWidget(
+                          builder: (context) => SelectImagesCardWidget(
                             file: file,
-                            fileName: fileName,
-                            fileList: fileList,
+                            // fileName: fileName,
+                            filesList: fileList,
                             mediaCategory: mediaCategory,
                           ),
                         ),

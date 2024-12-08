@@ -11,6 +11,7 @@ class AddMediaFiles {
       compressionQuality: 0,
     );
     if (result == null) return;
+  
     for (var file in result.files) {
       debugPrint("file $file");
       DirectoriesPath().saveFilePermanently(file, mediaCategory);
@@ -19,7 +20,6 @@ class AddMediaFiles {
 
   FileType getFileType(mediaCategory) {
     if (mediaCategory == "Audio") {
-      debugPrint("** $mediaCategory");
       return FileType.audio;
     }
     if (mediaCategory == "Vidéo") {

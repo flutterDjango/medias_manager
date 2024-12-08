@@ -12,5 +12,5 @@ export "navigator_drawer_widget.dart";
 export "cut_up_media_card_widget.dart";
 export "dialog_time_form_widget.dart";
 export "juxtapose_images_card_widget.dart";
-export "juxtapose_images_card_test_widget.dart";
+export "select_images_card_widget.dart";
 

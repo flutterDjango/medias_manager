@@ -58,7 +58,6 @@ class _EditMediaScreenState extends State<EditMediaScreen> {
                     Center(
                       child: CutUpMediaCardWidget(
                         mediaCategory: widget.mediaCategory,
-                        // audioFormat: audioFormat,
                         file: widget.file,
                       ),
                     ),
@@ -77,11 +76,12 @@ class _EditMediaScreenState extends State<EditMediaScreen> {
                           ),
                         ],
                       )
-                    : Column(
+                    : const Column(
                         children: [
                           Center(
-                            child: JuxtaposeImagesCardWidget(
-                                file: widget.file,),
+                            child: Text('Images !!'),
+                            //   child: JuxtaposeImagesCardWidget(
+                            //       file: widget.file,),
                           ),
                         ],
                       ),

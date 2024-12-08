@@ -38,7 +38,7 @@ class FfmpegCommands {
 
   static Future<void> removeAudioFromVideo(inputVideo, outputVideo) async {
     String commandToExecute =
-        '-v error -i $inputVideo -c copy -an $outputVideo';
+        '-y -v error -i $inputVideo -c copy -an $outputVideo';
     try {
       await FFmpegKit.execute(commandToExecute).then(
         (session) async {
@@ -61,13 +61,11 @@ class FfmpegCommands {
     }
   }
 
-
-
-  static Future<void> cutPartFromMedia(inputVideo, outputVideo, startTime, endTime) async {
-    
+  static Future<void> cutPartFromMedia(
+      inputVideo, outputVideo, startTime, endTime) async {
     String duration = Helpers.durationInSeconde(startTime, endTime);
     String commandToExecute =
-        '-v error -ss $startTime -i $inputVideo -t $duration -c copy $outputVideo';
+        '-y -v error -ss $startTime -i $inputVideo -t $duration -c copy $outputVideo';
     try {
       await FFmpegKit.execute(commandToExecute).then(
         (session) async {
@@ -89,7 +87,6 @@ class FfmpegCommands {
       debugPrint('erreur :$e');
     }
   }
-
 
   static Future<Map<String, dynamic>?> fetchMetadatas(file) async {
     String commandToExecute =
@@ -152,5 +149,33 @@ class FfmpegCommands {
     metadatas['streams'] = streamsdatas;
     metadatas['size'] = Helpers.bytesToKilobyteOrMegabyte(size);
     return metadatas;
+  }
+
+  static Future<void> juxtaposeTwoImageH(
+      image1, image2, heightImage, outputImage) async {
+    String commandToExecute =
+        "-y -v error -i $image1 -i $image2 -filter_complex [0]scale=-1:$heightImage[left];[left][1]hstack $outputImage";
+        
+    debugPrint(commandToExecute);
+    try {
+      await FFmpegKit.execute(commandToExecute).then(
+        (session) async {
+          final returnCode = await session.getReturnCode();
+
+          if (ReturnCode.isSuccess(returnCode)) {
+            debugPrint('Done');
+            // return "Done";
+          } else if (ReturnCode.isCancel(returnCode)) {
+            debugPrint('canceled');
+            // return "Canceled";
+          } else {
+            debugPrint("error ! $returnCode");
+            // return "error ! $returnCode";
+          }
+        },
+      );
+    } catch (e) {
+      debugPrint('erreur :$e');
+    }
   }
 }

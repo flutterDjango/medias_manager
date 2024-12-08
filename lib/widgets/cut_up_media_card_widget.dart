@@ -12,7 +12,6 @@ class CutUpMediaCardWidget extends StatefulWidget {
       required this.file});
 
   final String mediaCategory;
-  // final Function(String) audioFormat;
   final FileSystemEntity file;
 
   @override
@@ -83,55 +82,65 @@ class _CutUpMediaCardWidgetState extends State<CutUpMediaCardWidget> {
                     height: 5,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Expanded(child: Text('Début')),
-                      ElevatedButton(
-                        onPressed: () async {
-                          const String title = "Début de l'extrait";
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              const String title = "Début de l'extrait";
 
-                          final String start = await showDialog(
-                              context: context,
-                              builder: (_) => const DialogTimeFormWidget(
-                                    title: title,
-                                  ));
+                              final String start = await showDialog(
+                                context: context,
+                                builder: (_) => const DialogTimeFormWidget(
+                                  title: title,
+                                ),
+                              );
 
-                          setState(
-                            () {
-                              startTime = start;
+                              setState(
+                                () {
+                                  startTime = start;
+                                },
+                              );
                             },
-                          );
-                        },
-                        child: const Text('Début'),
+                            child: const Text('Début'),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(startTime),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(startTime),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          const String title = "Fin de l'extrait";
+                      // const SizedBox(
+                      //   width: 20,
+                      // ),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () async {
+                              const String title = "Fin de l'extrait";
 
-                          final String end = await showDialog(
-                              context: context,
-                              builder: (_) => const DialogTimeFormWidget(
-                                    title: title,
-                                  ));
+                              final String end = await showDialog(
+                                  context: context,
+                                  builder: (_) => const DialogTimeFormWidget(
+                                        title: title,
+                                      ));
 
-                          setState(
-                            () {
-                              endTime = end;
+                              setState(
+                                () {
+                                  endTime = end;
+                                },
+                              );
                             },
-                          );
-                        },
-                        child: const Text('Fin'),
+                            child: const Text('Fin'),
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(endTime),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(endTime),
                     ],
                   ),
                   TextFormField(
