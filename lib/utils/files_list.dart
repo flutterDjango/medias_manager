@@ -85,7 +85,7 @@ class FilesList extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FilesListWidget(
+                        builder: (context) => ListMediaScreens(
                           mediaCategory: mediaCategory,
                         ),
                       ),

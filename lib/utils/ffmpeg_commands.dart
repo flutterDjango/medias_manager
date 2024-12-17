@@ -155,8 +155,67 @@ class FfmpegCommands {
       image1, image2, heightImage, outputImage) async {
     String commandToExecute =
         "-y -v error -i $image1 -i $image2 -filter_complex [0]scale=-1:$heightImage[left];[left][1]hstack $outputImage";
-        
+
     debugPrint(commandToExecute);
+    try {
+      await FFmpegKit.execute(commandToExecute).then(
+        (session) async {
+          final returnCode = await session.getReturnCode();
+
+          if (ReturnCode.isSuccess(returnCode)) {
+            debugPrint('Done');
+            // return "Done";
+          } else if (ReturnCode.isCancel(returnCode)) {
+            debugPrint('canceled');
+            // return "Canceled";
+          } else {
+            debugPrint("error ! $returnCode");
+            // return "error ! $returnCode";
+          }
+        },
+      );
+    } catch (e) {
+      debugPrint('erreur :$e');
+    }
+  }
+
+  static Future<void> imageMirorEffect(inputVideo, outputVideo) async {
+    String commandToExecute =
+        '-y -v error -i $inputVideo -vf hflip -c:a copy $outputVideo';
+    try {
+      await FFmpegKit.execute(commandToExecute).then(
+        (session) async {
+          final returnCode = await session.getReturnCode();
+
+          if (ReturnCode.isSuccess(returnCode)) {
+            debugPrint('Done');
+            // return "Done";
+          } else if (ReturnCode.isCancel(returnCode)) {
+            debugPrint('canceled');
+            // return "Canceled";
+          } else {
+            debugPrint("error ! $returnCode");
+            // return "error ! $returnCode";
+          }
+        },
+      );
+    } catch (e) {
+      debugPrint('erreur :$e');
+    }
+  }
+
+  static Future<void> changeFormat(inputFile, outputFile, format) async {
+    String commandToExecute = "";
+    // if (format == "ogg") {
+      commandToExecute =
+          '-y -v error -i $inputFile $outputFile';
+      debugPrint("command $commandToExecute");
+      
+      // ffmpeg -i example.ogg example.wav
+    // } else {
+    //   commandToExecute = "";
+    // }
+
     try {
       await FFmpegKit.execute(commandToExecute).then(
         (session) async {

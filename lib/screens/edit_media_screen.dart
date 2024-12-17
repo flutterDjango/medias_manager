@@ -25,125 +25,107 @@ class _EditMediaScreenState extends State<EditMediaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(widget.fileName),
+        centerTitle: true,
+        title: Text(widget.fileName),
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          },
         ),
         automaticallyImplyLeading: false,
       ),
+      drawer: const NavigatorDrawerWidget(),
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const HorizontalButtonBarWidget(
-                homeScreen: false,
-              ),
-              if (widget.mediaCategory == "Vidéo")
-                Column(
-                  children: [
-                    Center(
-                      child: ExtractAudioCardWidget(
-                        mediaCategory: widget.mediaCategory,
-                        // audioFormat: audioFormat,
-                        file: widget.file,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: Column(
+              children: [
+                const HorizontalButtonBarWidget(
+                  homeScreen: false,
+                ),
+                const SizedBox(height: 10,),
+                if (widget.mediaCategory == "Vidéo")
+                  Column(
+                    children: [
+                      Center(
+                        child: ExtractAudioCardWidget(
+                          mediaCategory: widget.mediaCategory,
+                          file: widget.file,
+                        ),
                       ),
-                    ),
-                    Center(
-                      child: RemoveAudioCardWidget(
-                        mediaCategory: widget.mediaCategory,
-                        // audioFormat: audioFormat,
-                        file: widget.file,
+                      const SizedBox(height: 10,),
+                      Center(
+                        child: RemoveAudioCardWidget(
+                          mediaCategory: widget.mediaCategory,
+                          file: widget.file,
+                        ),
                       ),
-                    ),
-                    Center(
-                      child: CutUpMediaCardWidget(
-                        mediaCategory: widget.mediaCategory,
-                        file: widget.file,
+                      const SizedBox(height: 10,),
+                      Center(
+                        child: CutUpMediaCardWidget(
+                          mediaCategory: widget.mediaCategory,
+                          file: widget.file,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              else
-                (widget.mediaCategory == "Audio")
-                    ? Column(
-                        children: [
-                          Center(
-                            child: CutUpMediaCardWidget(
-                              mediaCategory: widget.mediaCategory,
-                              // audioFormat: audioFormat,
-                              file: widget.file,
+                      const SizedBox(height: 10,),
+                      Center(
+                        child: ChangeFormatCardWidget(
+                          mediaCategory: widget.mediaCategory,
+                          file: widget.file,
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  (widget.mediaCategory == "Audio")
+                      ? Column(
+                          children: [
+                            Center(
+                              child: CutUpMediaCardWidget(
+                                mediaCategory: widget.mediaCategory,
+                                file: widget.file,
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                    : const Column(
-                        children: [
-                          Center(
-                            child: Text('Images !!'),
-                            //   child: JuxtaposeImagesCardWidget(
-                            //       file: widget.file,),
-                          ),
-                        ],
-                      ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+                            const SizedBox(height: 10,),
+                            Center(
+                              child: ChangeFormatCardWidget(
+                                mediaCategory: widget.mediaCategory,
+                                file: widget.file,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Center(
+                              child: ChangeFormatCardWidget(
+                                mediaCategory: widget.mediaCategory,
+                                file: widget.file,
+                              ),
+                            ),
+                            const SizedBox(height: 10,),
+                            Center(
+                              child: MirorImageEffectCard(
+                                mediaCategory: widget.mediaCategory,
+                                file: widget.file,
+                              ),
+                            ),
+                          ],
+                        ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
-  // audioFormat(selected) {
-  //   debugPrint("audio: $selected");
-  // }
-  // callback(selectedItem) {
-  //   debugPrint('ici selectedIem $selectedItem');
-  // }
-
-  // List<String> getFormatList(mediaCategory, extract) {
-  //   final String media = removeDiacritics(mediaCategory);
-
-  //   if ((media == "Audio") | (extract)) {
-  //     return ['mp3', "wav", "wma", "au", "m4a", "aac"];
-  //   }
-  //   if (media == "Video") {
-  //     return ['mp4', "mov"];
-  //   }
-  //   return [];
-  // }
-
-  // Widget _extractCardWidget() {
-  //   return Card(
-  //     elevation: 10,
-  //     shadowColor: Colors.grey.shade100,
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(20.0),
-  //       child: Column(
-  //         children: [
-  //           const Text(
-  //             "Extraire l'audio de la vidéo.",
-  //             style: TextStyle(fontSize: 20),
-  //           ),
-  //           const SizedBox(
-  //             height: 20,
-  //           ),
-  //           DropdownItems(
-  //             itemsList: getFormatList(widget.mediaCategory, true),
-  //             initialItem: null,
-  //             callback: callback,
-  //           ),
-  //           const SizedBox(
-  //             height: 20,
-  //           ),
-  //           ElevatedButton(
-  //             onPressed: () {},
-  //             child: const Text("Extraire"),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 }

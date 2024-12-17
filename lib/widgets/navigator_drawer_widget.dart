@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medias_manager/screens/screens.dart';
 
-import 'widgets.dart';
 
 class NavigatorDrawerWidget extends StatelessWidget {
   const NavigatorDrawerWidget({super.key});
@@ -31,7 +30,7 @@ class NavigatorDrawerWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FilesListWidget(
+                  builder: (context) => const ListMediaScreens(
                     mediaCategory: "Audio",
                   ),
                 ),
@@ -45,7 +44,7 @@ class NavigatorDrawerWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FilesListWidget(
+                  builder: (context) => const ListMediaScreens(
                     mediaCategory: "Vidéo",
                   ),
                 ),
@@ -59,7 +58,7 @@ class NavigatorDrawerWidget extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const FilesListWidget(
+                  builder: (context) => const ListMediaScreens(
                     mediaCategory: "Image",
                   ),
                 ),

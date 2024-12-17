@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medias_manager/screens/home_screen.dart';
 import 'package:medias_manager/screens/list_media_screen.dart';
-import 'package:medias_manager/widgets/files_list_widget.dart';
 
 class HorizontalButtonBarWidget extends StatelessWidget {
   const HorizontalButtonBarWidget({super.key, required this.homeScreen});
@@ -39,15 +38,6 @@ class HorizontalButtonBarWidget extends StatelessWidget {
                 ),
               ),
             );
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => const FilesListWidget(
-            //       mediaCategory: "Audio",
-            //     ),
-            //   ),
-            // );
-            // context.push(RouteLocation.createContact);
           },
           child: const Icon(Icons.music_note),
         ),

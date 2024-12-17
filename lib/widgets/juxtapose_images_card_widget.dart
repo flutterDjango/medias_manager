@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:medias_manager/screens/list_media_screen.dart';
 import '../utils/utils.dart';
 import 'widgets.dart';
 
@@ -98,90 +99,98 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
               const SizedBox(
                 height: 15,
               ),
-              Card(
-                elevation: 10,
-                shadowColor: Colors.grey.shade100,
-                color: Colors.grey.shade200,
-                child: Column(
-                  children: [
-                    Text(
-                      "Photo de gauche: $_firstImage",
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      "Photo de droite: $_secondImage",
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        FileSystemEntity? bufferFileImage = _fileImage1;
-                        setState(
-                          () {
-                            _fileImage1 = _fileImage2;
-                            _fileImage2 = bufferFileImage;
-                            _firstImage = _fileImage1!.path.split("/").last;
-                            _secondImage = _fileImage2!.path.split("/").last;
-                          },
-                        );
-                      },
-                      child: const Text("Permuter les images"),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10.0, left: 15, right: 15, bottom: 20.0),
-                      child: TextFormField(
-                        controller: _juxtaposedImageNameController,
-                        // keyboardType: TextInputType.text,
-                        maxLength: nbMaxChar,
-                        decoration: const InputDecoration(
-                          label: Text("Nom du fichier de sortie"),
-                        ),
-                        validator: (value) {
-                          return Helpers.validStringField(value, nbMaxChar);
-                        },
-                        onSaved: (value) {
-                          outputImage =
-                              "$outputFilePath/${value!}.$fileExtension";
-                        },
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0, left: 10, right: 10, bottom: 20),
+                child: Card(
+                  elevation: 10,
+                  shadowColor: Colors.grey.shade100,
+                  color: Colors.grey.shade200,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formGlobalKey.currentState!.validate()) {
-                          _formGlobalKey.currentState!.save();
-                          (image1Height >= image2Height)
-                              ? imageHeight = image2Height
-                              : imageHeight = image2Height;
-                          // debugPrint(
-                          //     "${_fileImage1!.path}, ${_fileImage2!.path}, $image1Height, $image2Height, $imageHeight");
-                          await FfmpegCommands.juxtaposeTwoImageH(
-                              _fileImage1!.path,
-                              _fileImage2!.path,
-                              imageHeight,
-                              outputImage);
-                          if (context.mounted) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FilesListWidget(
-                                  mediaCategory: "Image",
+                      Text(
+                        "Photo de gauche: $_firstImage",
+                        style: const TextStyle(fontSize: 18.0),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        "Photo de droite: $_secondImage",
+                        style: const TextStyle(fontSize: 18.0),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          FileSystemEntity? bufferFileImage = _fileImage1;
+                          setState(
+                            () {
+                              _fileImage1 = _fileImage2;
+                              _fileImage2 = bufferFileImage;
+                              _firstImage = _fileImage1!.path.split("/").last;
+                              _secondImage = _fileImage2!.path.split("/").last;
+                            },
+                          );
+                        },
+                        child: const Text("Permuter les images"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10.0, left: 15, right: 15, bottom: 20.0),
+                        child: TextFormField(
+                          controller: _juxtaposedImageNameController,
+                          // keyboardType: TextInputType.text,
+                          maxLength: nbMaxChar,
+                          decoration: const InputDecoration(
+                            label: Text("Nom du fichier de sortie (sans extension)", style: TextStyle(fontSize: 12),),
+                          ),
+                          validator: (value) {
+                            return Helpers.validStringField(value, nbMaxChar);
+                          },
+                          onSaved: (value) {
+                            outputImage =
+                                "$outputFilePath/${value!}.$fileExtension";
+                          },
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (_formGlobalKey.currentState!.validate()) {
+                            _formGlobalKey.currentState!.save();
+                            (image1Height >= image2Height)
+                                ? imageHeight = image2Height
+                                : imageHeight = image2Height;
+                            // debugPrint(
+                            //     "${_fileImage1!.path}, ${_fileImage2!.path}, $image1Height, $image2Height, $imageHeight");
+                            await FfmpegCommands.juxtaposeTwoImageH(
+                                _fileImage1!.path,
+                                _fileImage2!.path,
+                                imageHeight,
+                                outputImage);
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ListMediaScreens(
+                                    mediaCategory: "Image",
+                                  ),
                                 ),
-                              ),
-                            );
-                          } else {
-                            return;
+                              );
+                            } else {
+                              return;
+                            }
                           }
-                        }
-                      },
-                      child: const Text("Valider"),
-                    ),
-                  ],
+                        },
+                        child: const Text("Valider"),
+
+                      ),
+                      const SizedBox(height: 10,)
+                    ],
+                  ),
                 ),
               ),
             ],

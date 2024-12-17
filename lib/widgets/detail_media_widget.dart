@@ -87,7 +87,6 @@ class DetailMediaWidget extends StatelessWidget {
   }
 
   _displayDataImage(data) {
-    // String? channelLayout = data!['streams']['stream_$i']['channel_layout'];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -130,7 +129,5 @@ class DetailMediaWidget extends StatelessWidget {
         )
       ],
     );
-
-    // return const Text('tatta');
   }
 }

@@ -17,14 +17,25 @@ class MediasFormat{
     return const Icon(Icons.warning_amber);
   }
 
-  static List<String> getFormatList(mediaCategory, extract) {
+  static List<String> getFormatList(mediaCategory, filePath) {
     final String media = removeDiacritics(mediaCategory);
+    final String format = filePath.split('/').last.split('.').last;
+    
 
-    if ((media == "Audio") | (extract)) {
-      return ['mp3', "wav", "wma", "au", "m4a", "aac"];
+    if (media == "Audio") {
+      List<String> formats = ['mp3', "wav", "ogg"];
+      formats.remove(format);
+      return formats;
     }
     if (media == "Video") {
-      return ['mp4', "mov"];
+      List<String> formats = ['mp4', "avi", "mov"];
+      formats.remove(format);
+      return formats;
+    }
+    if (media == "Image") {
+      List<String> formats = ['webp', "avif"];
+      formats.remove(format);
+      return formats;
     }
     return [];
   }

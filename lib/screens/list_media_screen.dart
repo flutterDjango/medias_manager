@@ -52,7 +52,9 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(widget.mediaCategory)),
+        title: Center(
+          child: Text(widget.mediaCategory),
+        ),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -69,9 +71,10 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
             child: IconButton(
               icon: const Icon(
                 Icons.add,
-                color: Colors.blue,
+                color: Colors.black,
               ),
-              style: IconButton.styleFrom(backgroundColor: Colors.redAccent, iconSize: 30),
+              style: IconButton.styleFrom(
+                  backgroundColor: Colors.grey.shade200, iconSize: 30),
               onPressed: () async {
                 await AddMediaFiles().addFiles(widget.mediaCategory);
                 setState(() {

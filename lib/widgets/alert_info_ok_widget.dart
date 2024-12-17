@@ -15,7 +15,7 @@ class AlertInfoOkWidget extends StatelessWidget {
         children: [
           const Icon(Icons.warning_amber, color: Colors.red,),
           const SizedBox(width: 10,),
-          Text(message),
+          Expanded(child: Text(message)),
         ],
       ),
       actions: [
