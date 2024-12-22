@@ -100,7 +100,7 @@ class _ChangeFormatCardWidgetState extends State<ChangeFormatCardWidget> {
                         context: context,
                         builder: (ctx) {
                           return const WaitMessageWidget(
-                            title: "Patientez !",
+                            title: "Veuillez patienter !",
                             message: "Conversion en cours ...",
                           );
                         },

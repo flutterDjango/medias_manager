@@ -33,7 +33,7 @@ class MediasFormat{
       return formats;
     }
     if (media == "Image") {
-      List<String> formats = ['webp', "avif"];
+      List<String> formats = ['jpg', "tiff", "png"];
       formats.remove(format);
       return formats;
     }

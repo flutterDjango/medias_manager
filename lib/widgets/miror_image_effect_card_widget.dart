@@ -56,6 +56,7 @@ class _MirorImageEffectCardState extends State<MirorImageEffectCard> {
         child: Card(
           elevation: 10,
           shadowColor: Colors.grey.shade100,
+          color: Colors.grey.shade200,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: 10.0, left: 15, right: 15, bottom: 20.0),

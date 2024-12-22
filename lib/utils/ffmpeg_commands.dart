@@ -92,16 +92,16 @@ class FfmpegCommands {
     String commandToExecute =
         '-v error ${file.path} -show_format -show_streams -print_format json';
     Map<String, dynamic>? metadatas = {};
-    // Map<String, dynamic>? streamsdatas = {};
+
     try {
       Map<String, dynamic>? result =
           await FFprobeKit.execute(commandToExecute).then(
         (session) async {
           final returnCode = await session.getReturnCode();
           final output = await session.getOutput();
-          // debugPrint('---> :  $output');
           if (ReturnCode.isSuccess(returnCode)) {
             metadatas = getMetadatas(output);
+            debugPrint('metadatas $metadatas');
             return metadatas;
           }
           return null;
@@ -109,7 +109,7 @@ class FfmpegCommands {
       );
       return result;
     } catch (e) {
-      debugPrint('erreur :$e');
+      debugPrint('erreur : $e');
       return null;
     }
   }
@@ -119,15 +119,15 @@ class FfmpegCommands {
     Map<String, dynamic>? streamsdatas = {};
     Map outputMap = json.decode(datas);
     int nbStreams = outputMap['format']['nb_streams'];
-
     double size = double.parse(outputMap['format']['size']);
     for (int i = 0; i < nbStreams; i++) {
       Map<String, dynamic>? tags = outputMap['streams'][i]['tags'];
-      double duration = double.parse(outputMap['streams'][i]['duration']);
+      String? d = outputMap['streams'][i]['duration'];
+      double duration = 0;
+      d == null ? duration = 0 : duration = double.parse(d); 
       String? startTime = outputMap['streams'][i]['start_time'];
       String codecType = outputMap['streams'][i]['codec_type'];
       String codecName = outputMap['streams'][i]['codec_name'];
-
       String? channelLayout = outputMap['streams'][i]['channel_layout'];
       int? width = outputMap['streams'][i]['width'];
       int? height = outputMap['streams'][i]['height'];
@@ -156,7 +156,6 @@ class FfmpegCommands {
     String commandToExecute =
         "-y -v error -i $image1 -i $image2 -filter_complex [0]scale=-1:$heightImage[left];[left][1]hstack $outputImage";
 
-    debugPrint(commandToExecute);
     try {
       await FFmpegKit.execute(commandToExecute).then(
         (session) async {
@@ -206,12 +205,14 @@ class FfmpegCommands {
 
   static Future<void> changeFormat(inputFile, outputFile, format) async {
     String commandToExecute = "";
-    // if (format == "ogg") {
-      commandToExecute =
-          '-y -v error -i $inputFile $outputFile';
-      debugPrint("command $commandToExecute");
-      
-      // ffmpeg -i example.ogg example.wav
+    // if (format == "avif") {
+    //   //  ffmpeg -i image.png -c:v libaom-av1 -still-picture 1 image.avif
+    //   commandToExecute = '-y -v error -i $inputFile -c:v libaom-av1 -still-picture 1 $outputFile';
+    // } else {
+    commandToExecute = '-y -v error -i $inputFile $outputFile';
+    // }
+
+    // ffmpeg -i example.ogg example.wav
     // } else {
     //   commandToExecute = "";
     // }

@@ -115,7 +115,7 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
                             context: context,
                             builder: (ctx) {
                               return const WaitMessageWidget(
-                                title: "Patientez !",
+                                title: "Veuillez patienter !",
                                 message: "Extraction en cours ...",
                               );
                             },

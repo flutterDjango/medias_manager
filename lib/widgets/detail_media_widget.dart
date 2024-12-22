@@ -48,7 +48,8 @@ class DetailMediaWidget extends StatelessWidget {
                     }
                     if (snapshot.hasData) {
                       Map<String, dynamic>? data = snapshot.data;
-      
+                      debugPrint("-------------------");
+                      debugPrint("data $data");
                       return Column(
                         children: [
                           Text('Taille : ${data!['size'] ?? ""}'),
