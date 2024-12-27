@@ -22,7 +22,6 @@ class HorizontalButtonBarWidget extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
               );
-              // context.push(RouteLocation.createContact);
             },
             child: const Icon(Icons.home),
           ),
@@ -53,7 +52,6 @@ class HorizontalButtonBarWidget extends StatelessWidget {
                 ),
               ),
             );
-            // //  context.push(RouteLocation.category);
           },
           child: const Icon(Icons.play_circle_outline),
         ),
@@ -69,7 +67,6 @@ class HorizontalButtonBarWidget extends StatelessWidget {
                 ),
               ),
             );
-            // //  context.push(RouteLocation.category);
           },
           child: const Icon(Icons.image_outlined),
         ),

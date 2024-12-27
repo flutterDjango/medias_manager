@@ -1,5 +1,4 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:medias_manager/utils/utils.dart';
 
 class AddMediaFiles {
@@ -13,7 +12,6 @@ class AddMediaFiles {
     if (result == null) return;
   
     for (var file in result.files) {
-      debugPrint("file $file");
       DirectoriesPath().saveFilePermanently(file, mediaCategory);
     }
   }

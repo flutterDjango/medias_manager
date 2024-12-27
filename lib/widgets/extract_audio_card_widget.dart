@@ -43,7 +43,6 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
 
     setState(() {
       audioPath = path;
-      // filesList = filesJsonList;
     });
   }
 
@@ -79,7 +78,6 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
                   ),
                   TextFormField(
                     controller: _audioNameController,
-                    // keyboardType: TextInputType.text,
                     maxLength: nbMaxChar,
                     decoration: const InputDecoration(
                       label: Text("Nom du fichier audio"),
@@ -154,8 +152,10 @@ class _ExtractAudioCardWidgetState extends State<ExtractAudioCardWidget> {
   }
 
   callback(selectedItem) {
-    setState(() {
-      format = selectedItem;
-    },);
+    setState(
+      () {
+        format = selectedItem;
+      },
+    );
   }
 }

@@ -78,7 +78,6 @@ class _RemoveAudioCardWidgetState extends State<RemoveAudioCardWidget> {
                   ),
                   TextFormField(
                     controller: _videoNameController,
-                    // keyboardType: TextInputType.text,
                     maxLength: nbMaxChar,
                     decoration: const InputDecoration(
                       label: Text("Nom du fichier video"),
@@ -102,11 +101,6 @@ class _RemoveAudioCardWidgetState extends State<RemoveAudioCardWidget> {
                               format = widget.file.path.split('/').last.split('.').last;
                               String outputVideo = "$videoPath/$_fileName.$format";
                               final String inputVideo = widget.file.path;
-                              debugPrint(inputVideo);
-                              
-                              debugPrint(outputVideo);
-                              debugPrint('ext ${widget.file.path.split('/').last.split('.').last}');
-
                               setState(() {
                                 _isNotDone = false;
                               });
@@ -138,11 +132,4 @@ class _RemoveAudioCardWidgetState extends State<RemoveAudioCardWidget> {
       ),
     );
   }
-
-  // callback(selectedItem) {
-  //   setState(() {
-  //     format = selectedItem;
-  //   });
-    // widget.audioFormat(selectedItem);
-  // }
 }

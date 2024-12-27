@@ -1,8 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:medias_manager/utils/ffmpeg_commands.dart';
+// import 'package:medias_manager/utils/ffmpeg_commands.dart';
 import 'package:medias_manager/widgets/circular_progress_widget.dart';
+
+import '../utils/utils.dart';
+import 'widgets.dart';
 
 class DetailMediaWidget extends StatelessWidget {
   const DetailMediaWidget(
@@ -10,7 +13,6 @@ class DetailMediaWidget extends StatelessWidget {
 
   final FileSystemEntity file;
   final String mediaCategory;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,6 @@ class DetailMediaWidget extends StatelessWidget {
               thickness: 1.5,
               color: Colors.blue,
             ),
-      
             Column(
               children: [
                 FutureBuilder<Map<String, dynamic>?>(
@@ -48,8 +49,6 @@ class DetailMediaWidget extends StatelessWidget {
                     }
                     if (snapshot.hasData) {
                       Map<String, dynamic>? data = snapshot.data;
-                      debugPrint("-------------------");
-                      debugPrint("data $data");
                       return Column(
                         children: [
                           Text('Taille : ${data!['size'] ?? ""}'),
@@ -73,11 +72,40 @@ class DetailMediaWidget extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Fermer'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Fermer'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        bool exportOk = await DirectoriesPath()
+                            .exportFile(file, mediaCategory);
+                        if (exportOk && context.mounted) {
+                          final result = await showDialog(
+                            context: context,
+                            builder: (_) => AlertInfoOkWidget(
+                              title: "Exportation",
+                              message:
+                                  "Le fichier est disponible dans le dossier: mediasManager/$mediaCategory",
+                              icon: false,
+                            ),
+                          );
+                          if (!result) {
+                            return;
+                          }
+                          if (context.mounted) {
+                            Navigator.pop(context);
+                          }
+                        }
+                      },
+                      child: const Text('Exporter'),
+                    ),
+                  ],
                 ),
               ],
             )
@@ -118,7 +146,6 @@ class DetailMediaWidget extends StatelessWidget {
             Text(channelLayout ?? ''),
           ],
         ),
-        // if (i > 1)
         const Divider(
           thickness: 1.5,
           color: Colors.grey,

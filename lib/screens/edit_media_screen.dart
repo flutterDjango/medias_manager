@@ -19,8 +19,6 @@ class EditMediaScreen extends StatefulWidget {
 }
 
 class _EditMediaScreenState extends State<EditMediaScreen> {
-  // final TextEditingController _mediaFileTitleController =
-  //     TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

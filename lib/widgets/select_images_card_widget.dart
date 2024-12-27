@@ -26,7 +26,6 @@ class _SelectImagesCardWidgetState extends State<SelectImagesCardWidget> {
   Widget build(BuildContext context) {
     widget.filesList.remove(widget.file);
     FileSystemEntity fileImage1 = widget.file;
-    // debugPrint('file list ${widget.filesList.toString()}');
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text(widget.mediaCategory)),
@@ -82,16 +81,12 @@ class _SelectImagesCardWidgetState extends State<SelectImagesCardWidget> {
               Icon(Icons.pan_tool_alt_rounded)
             ],
           ),
-          // Text(widget.filesList.toString()),
-          // Text(widget.filesList.length.toString()),
           Expanded(
             child: ListView.builder(
-              // shrinkWrap: true,
               itemCount: widget.filesList.length,
               itemBuilder: (BuildContext context, int index) {
                 var file = widget.filesList[index];
                 String fileName = file.path.split('/').last;
-                // String fileExtension = file.path.split('.').last;
                 Map<String, Map<String, dynamic>> imageSize = {};
                 return Padding(
                   padding: const EdgeInsets.only(
@@ -157,39 +152,3 @@ class _SelectImagesCardWidgetState extends State<SelectImagesCardWidget> {
     );
   }
 }
-
-// const AlertInfoOkWidget(
-//         title: "Attention !",
-//         message: "Horaires de début et fin incohérents !",
-//       );
-//   }
-
-
-
-
-// def rezise(photo, output, width):
-//     subprocess.run(["ffmpeg", "-i", photo, "-vf", f"scale={width}:-1", output])
-
-
-// if __name__ == "__main__":
-//     photo = "../photos/exo2.jpg"
-//     width = 2480
-//     output_photo = f"../photos/exo2_{width}.jpg"
-//     rezise(photo, output_photo, width)
-
-
-
-
-// def join_two_images_horizontally(photo_1, photo_2, output_photo):
-//     subprocess.run(
-//         [
-//             "ffmpeg",
-//             "-i",
-//             photo_1,
-//             "-i",
-//             photo_2,
-//             "-filter_complex",
-//             "hstack",
-//             output_photo,
-//         ]
-//     )

@@ -90,7 +90,6 @@ class _DialogTimeFormWidgetState extends State<DialogTimeFormWidget> {
                   },
                 ),
                 TextFormField(
-                  // autofocus: true,
                   controller: _secondeController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: false),
@@ -139,7 +138,6 @@ class _DialogTimeFormWidgetState extends State<DialogTimeFormWidget> {
               onPressed: () {
                 if (_formGlobalKey.currentState!.validate()) {
                   _formGlobalKey.currentState!.save();
-                  debugPrint('_duration $_duration');
                   Navigator.of(context).pop(_duration);
                   _hourController.clear();
                   _minuteController.clear();
@@ -174,7 +172,5 @@ class _DialogTimeFormWidgetState extends State<DialogTimeFormWidget> {
       s = '0$s';
     }
     return "$h:$m:$s";
-
-    // return '00:00:00';
   }
 }

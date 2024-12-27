@@ -41,11 +41,9 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
   String getFirstImage() {
     FileSystemEntity fileImage1 = widget.imagesFilesList[0];
     String fileName1 = fileImage1.path.split("/").last;
-    debugPrint("das le init $fileName1");
     setState(
       () {
         _fileImage1 = fileImage1;
-        // _firstImage = fileName1;
       },
     );
     return fileName1;
@@ -64,9 +62,7 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // int image1Width = widget.imagesSize[_fileImage1!.path]!['width'];
     int image1Height = widget.imagesSize[_fileImage1!.path]!['height'];
-    // int image2Width = widget.imagesSize[_fileImage2!.path]!['width'];
     int image2Height = widget.imagesSize[_fileImage2!.path]!['height'];
     int imageHeight = 0;
     String fileExtension = _fileImage1!.path.split('.').last;
@@ -143,7 +139,6 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
                             top: 10.0, left: 15, right: 15, bottom: 20.0),
                         child: TextFormField(
                           controller: _juxtaposedImageNameController,
-                          // keyboardType: TextInputType.text,
                           maxLength: nbMaxChar,
                           decoration: const InputDecoration(
                             label: Text("Nom du fichier de sortie (sans extension)", style: TextStyle(fontSize: 12),),
@@ -164,8 +159,7 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
                             (image1Height >= image2Height)
                                 ? imageHeight = image2Height
                                 : imageHeight = image2Height;
-                            // debugPrint(
-                            //     "${_fileImage1!.path}, ${_fileImage2!.path}, $image1Height, $image2Height, $imageHeight");
+                          
                             await FfmpegCommands.juxtaposeTwoImageH(
                                 _fileImage1!.path,
                                 _fileImage2!.path,
@@ -196,31 +190,6 @@ class _JuxtaposeImagesCardWidgetState extends State<JuxtaposeImagesCardWidget> {
             ],
           ),
 
-          // Text("$outputFilePath/toto.$fileExtension"),
-
-          // FfmpegCommands.juxtaposeTwoImageH(fileImage1.path, fileImage2.path, image1Height, outputImage);
-          // for (FileSystemEntity imageFile in widget.imagesFilesList)
-          //   Card(
-          //     child: Column(
-          //       children: [
-          //         Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //           children: [
-          //             Text(imageFile.path.split('/').last),
-          //             Text(
-          //                 "Largeur: ${widget.imagesSize[imageFile.path]!['width']}"),
-          //             Text(
-          //                 "Hauteur: ${widget.imagesSize[imageFile.path]!['height']}"),
-          //           ],
-          //         ),
-
-          //       ],
-          //     ),
-          //   ),
-
-          // Card(
-          //   child: ,
-          // ),
         ),
       ),
     );

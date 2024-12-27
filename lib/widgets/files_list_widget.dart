@@ -1,11 +1,9 @@
 import 'dart:io';
 
-// import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:medias_manager/screens/screens.dart';
 import 'package:medias_manager/utils/utils.dart';
 import 'package:medias_manager/widgets/widgets.dart';
-// import 'package:open_file/open_file.dart';
 import 'package:open_file_plus/open_file_plus.dart';
 
 class FilesListWidget extends StatefulWidget {
@@ -20,24 +18,18 @@ class _FilesListWidgetState extends State<FilesListWidget> {
   bool isPermission = false;
   var filesList = [];
 
-  // var checkAllPermissions = CheckPermission();
-
   var getFilesPath = DirectoriesPath();
   directoriesPath() async {
-    // var filesJsonList = [];
     List<FileSystemEntity> files =
         await getFilesPath.localFiles(widget.mediaCategory);
 
     setState(() {
       filesList = files;
-      // filesList = filesJsonList;
     });
   }
 
   checkPermission() async {
-    // var permission = await checkAllPermissions.storagePermission();
     var permission = await CheckPermission.storagePermission();
-    // var permission = await checkAllPermissions.isStoragePermission();
     if (permission) {
       setState(() {
         isPermission = true;
@@ -68,7 +60,6 @@ class _FilesListWidgetState extends State<FilesListWidget> {
           },
         ),
       ),
-
       drawer: const NavigatorDrawerWidget(),
       body: Column(
         children: [
@@ -101,8 +92,6 @@ class _FilesListWidgetState extends State<FilesListWidget> {
                               fileList: filesList,
                             ),
                           );
-                          // fileName: file['fileName'],
-                          // path: file['path'],
                         },
                       ),
                     )
@@ -127,7 +116,6 @@ class _FilesListWidgetState extends State<FilesListWidget> {
         },
         child: const Icon(Icons.add),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
     );
   }
 }
@@ -188,11 +176,10 @@ class TileList extends StatelessWidget {
                   final result = await showDialog(
                     context: context,
                     builder: (_) => AlertDialogYesNoWidget(
-                        title: "Attention!",
-                        message:
-                            "Voulez-vous effacer le fichier '$fileName' ?"),
+                      title: "Attention!",
+                      message: "Voulez-vous effacer le fichier '$fileName' ?",
+                    ),
                   );
-                  // const confirm =  AlertDialogYesNoWidget(title: "Effacer le fichier",message: "Voulez-vous effacer le fichier ?");
 
                   if (!result) {
                     return;

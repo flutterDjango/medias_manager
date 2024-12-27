@@ -202,6 +202,7 @@ class _CutUpMediaCardWidgetState extends State<CutUpMediaCardWidget> {
                                         title: "Attention !",
                                         message:
                                             "Heure de début et fin incohérents !",
+                                        icon:true,
                                       ),
                                     );
                                     return;
@@ -213,8 +214,6 @@ class _CutUpMediaCardWidgetState extends State<CutUpMediaCardWidget> {
                                 });
                                 await FfmpegCommands.cutPartFromMedia(
                                     inputFile, outputFile, startTime, endTime);
-                                // await FfmpegCommands.removeAudioFromVideo(
-                                //     inputFile, outputFile);
           
                                 if (context.mounted) {
                                   Navigator.push(
@@ -242,51 +241,4 @@ class _CutUpMediaCardWidgetState extends State<CutUpMediaCardWidget> {
       ),
     );
   }
-
-  // callback(selectedItem) {
-  //   setState(
-  //     () {
-  //       format = selectedItem;
-  //     },
-  //   );
-  // widget.audioFormat(selectedItem);
 }
-
-  // openDialog(String title) {
-  //   showDialog<String>(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: Text(title),
-  //       content: Column(
-  //         children: [
-  //           TextField(
-  //             autofocus: true,
-  //             controller: _startTimeController,
-  //             keyboardType: const TextInputType.numberWithOptions(decimal: false),
-  //             decoration: const InputDecoration(hintText: 'Heure'),
-  //           ),
-  //           TextField(
-  //             autofocus: true,
-  //             controller: _startTimeController,
-  //             keyboardType: const TextInputType.numberWithOptions(decimal: false),
-  //             decoration: const InputDecoration(hintText: 'Minute'),
-  //           ),
-  //         ],
-  //       ),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () {
-  //             print(_startTimeController.text);
-  //             setState(() {
-  //               duration = _startTimeController.text;
-  //             });
-  //             print('duration $duration');
-  //             Navigator.of(context).pop();
-  //           },
-  //           child: const Text('Valider'),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-

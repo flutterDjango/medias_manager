@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'utils.dart';
 
 class Helpers {
@@ -18,7 +16,6 @@ class Helpers {
   static String secondsToHoursMinutesSeconds(durationInSecond) {
     int h, m, s;
     if (durationInSecond == 0) {
-      debugPrint('zero');
       return "00:00:00";
     }
 
@@ -68,7 +65,6 @@ class Helpers {
 
   static bool validDuration(startTime, endTime) {
     if (startTime == endTime) {
-      debugPrint('temps nul');
       return false;
     } else {
       int hourStart = int.parse(startTime.split(":").first);
@@ -122,7 +118,6 @@ class Helpers {
     int imageHeight = 0;
     Map<String, dynamic>? result =
         await FfmpegCommands.fetchMetadatas(imageFile);
-    debugPrint(result.toString());
     imageWidth = result?['streams']['stream_1']['width'];
     imageHeight = result?['streams']['stream_1']['height'];
     imageSize[imageFile.path] = {"width": imageWidth, "height": imageHeight};

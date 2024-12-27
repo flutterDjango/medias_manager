@@ -101,7 +101,6 @@ class FfmpegCommands {
           final output = await session.getOutput();
           if (ReturnCode.isSuccess(returnCode)) {
             metadatas = getMetadatas(output);
-            debugPrint('metadatas $metadatas');
             return metadatas;
           }
           return null;
@@ -163,13 +162,10 @@ class FfmpegCommands {
 
           if (ReturnCode.isSuccess(returnCode)) {
             debugPrint('Done');
-            // return "Done";
           } else if (ReturnCode.isCancel(returnCode)) {
             debugPrint('canceled');
-            // return "Canceled";
           } else {
             debugPrint("error ! $returnCode");
-            // return "error ! $returnCode";
           }
         },
       );
@@ -188,13 +184,10 @@ class FfmpegCommands {
 
           if (ReturnCode.isSuccess(returnCode)) {
             debugPrint('Done');
-            // return "Done";
           } else if (ReturnCode.isCancel(returnCode)) {
             debugPrint('canceled');
-            // return "Canceled";
           } else {
             debugPrint("error ! $returnCode");
-            // return "error ! $returnCode";
           }
         },
       );
@@ -205,17 +198,9 @@ class FfmpegCommands {
 
   static Future<void> changeFormat(inputFile, outputFile, format) async {
     String commandToExecute = "";
-    // if (format == "avif") {
-    //   //  ffmpeg -i image.png -c:v libaom-av1 -still-picture 1 image.avif
-    //   commandToExecute = '-y -v error -i $inputFile -c:v libaom-av1 -still-picture 1 $outputFile';
-    // } else {
+    
     commandToExecute = '-y -v error -i $inputFile $outputFile';
-    // }
-
-    // ffmpeg -i example.ogg example.wav
-    // } else {
-    //   commandToExecute = "";
-    // }
+   
 
     try {
       await FFmpegKit.execute(commandToExecute).then(
@@ -224,13 +209,10 @@ class FfmpegCommands {
 
           if (ReturnCode.isSuccess(returnCode)) {
             debugPrint('Done');
-            // return "Done";
           } else if (ReturnCode.isCancel(returnCode)) {
             debugPrint('canceled');
-            // return "Canceled";
           } else {
             debugPrint("error ! $returnCode");
-            // return "error ! $returnCode";
           }
         },
       );

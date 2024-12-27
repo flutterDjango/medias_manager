@@ -29,7 +29,6 @@ class CheckPermission {
         Permission.videos,
         Permission.audio,
         Permission.photos,
-        //..... as needed
       ].request();
 
       havePermission =
@@ -40,7 +39,6 @@ class CheckPermission {
     }
 
     if (!havePermission) {
-      // if no permission then open app-setting
       await openAppSettings();
     }
 

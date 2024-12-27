@@ -35,13 +35,11 @@ class _ChangeFormatCardWidgetState extends State<ChangeFormatCardWidget> {
 
     setState(() {
       mediaPath = path;
-      // filesList = filesJsonList;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // var isNotDone = _isNotDone;
     return Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10),
       child: SizedBox(
@@ -54,8 +52,6 @@ class _ChangeFormatCardWidgetState extends State<ChangeFormatCardWidget> {
             padding: const EdgeInsets.only(
                 top: 10.0, left: 15, right: 15, bottom: 20.0),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (widget.mediaCategory == "Audio")
                   const Text(
@@ -85,7 +81,7 @@ class _ChangeFormatCardWidgetState extends State<ChangeFormatCardWidget> {
                 const SizedBox(
                   height: 10,
                 ),
-                // isNotDone
+                
                 ElevatedButton(
                   onPressed: () async {
                     String inputFile = widget.file.path;
@@ -129,7 +125,6 @@ class _ChangeFormatCardWidgetState extends State<ChangeFormatCardWidget> {
                   },
                   child: const Text("Valider"),
                 )
-                // : const CircularProgressWidget(),
               ],
             ),
           ),

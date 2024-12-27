@@ -16,24 +16,19 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
   bool isPermission = false;
   List<FileSystemEntity> filesList = [];
 
-  // var checkAllPermissions = CheckPermission();
 
   var getFilesPath = DirectoriesPath();
   directoriesPath() async {
-    // var filesJsonList = [];
     List<FileSystemEntity> files =
         await getFilesPath.localFiles(widget.mediaCategory);
 
     setState(() {
       filesList = files;
-      // filesList = filesJsonList;
     });
   }
 
   checkPermission() async {
-    // var permission = await checkAllPermissions.storagePermission();
     var permission = await CheckPermission.storagePermission();
-    // var permission = await checkAllPermissions.isStoragePermission();
     if (permission) {
       setState(() {
         isPermission = true;
@@ -83,18 +78,7 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
               },
             ),
           ),
-          // FloatingActionButton(
-          //   heroTag: 'Add',
-          //   onPressed: () async {
-          //     await AddMediaFiles().addFiles(widget.mediaCategory);
-          //     setState(
-          //       () {
-          //         directoriesPath();
-          //       },
-          //     );
-          //   },
-          //   child: const Icon(Icons.add),
-          // ),
+          
         ],
       ),
       drawer: const NavigatorDrawerWidget(),
@@ -128,8 +112,7 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
                                 mediaCategory: widget.mediaCategory,
                                 filesList: filesList,
                               ));
-                          // fileName: file['fileName'],
-                          // path: file['path'],
+                          
                         },
                       ),
                     )
@@ -145,16 +128,6 @@ class _ListMediaScreensState extends State<ListMediaScreens> {
                 ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     await AddMediaFiles().addFiles(widget.mediaCategory);
-      //     setState(() {
-      //       directoriesPath();
-      //     });
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked
     );
   }
 }

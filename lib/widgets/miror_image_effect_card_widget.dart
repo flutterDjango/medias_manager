@@ -72,7 +72,6 @@ class _MirorImageEffectCardState extends State<MirorImageEffectCard> {
                   ),
                   TextFormField(
                     controller: _mediaNameController,
-                    // keyboardType: TextInputType.text,
                     maxLength: nbMaxChar,
                     decoration: const InputDecoration(
                       label: Text("Nom du fichier (sans extension)", style: TextStyle(fontSize: 12),),
@@ -108,7 +107,6 @@ class _MirorImageEffectCardState extends State<MirorImageEffectCard> {
                                       message:
                                           "Le fichier '${outputFile.split('/').last}' existe déjà. Voulez-vous l'écraser ?"),
                                 );
-                                // const confirm =  AlertDialogYesNoWidget(title: "Effacer le fichier",message: "Voulez-vous effacer le fichier ?");
                                 if (result) {
                                   File(outputFile).deleteSync();
                                 } else {
@@ -120,8 +118,6 @@ class _MirorImageEffectCardState extends State<MirorImageEffectCard> {
                               });
                               await FfmpegCommands.imageMirorEffect(
                                   inputFile, outputFile);
-                              // await FfmpegCommands.removeAudioFromVideo(
-                              //     inputFile, outputFile);
 
                               if (context.mounted) {
                                 Navigator.push(

@@ -29,7 +29,8 @@ class FilesList extends StatelessWidget {
         shadowColor: Colors.grey.shade100,
         color: Colors.grey.shade200,
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           dense: true,
           visualDensity: const VisualDensity(horizontal: 0, vertical: -4),
           title: Text(
@@ -55,7 +56,6 @@ class FilesList extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => SelectImagesCardWidget(
                             file: file,
-                            // fileName: fileName,
                             filesList: filesList,
                             mediaCategory: mediaCategory,
                           ),
@@ -69,11 +69,10 @@ class FilesList extends StatelessWidget {
                   final result = await showDialog(
                     context: context,
                     builder: (_) => AlertDialogYesNoWidget(
-                        title: "Attention!",
-                        message:
-                            "Voulez-vous effacer le fichier '$fileName' ?"),
+                      title: "Attention!",
+                      message: "Voulez-vous effacer le fichier '$fileName' ?",
+                    ),
                   );
-                  // const confirm =  AlertDialogYesNoWidget(title: "Effacer le fichier",message: "Voulez-vous effacer le fichier ?");
 
                   if (!result) {
                     return;
